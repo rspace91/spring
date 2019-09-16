@@ -9,38 +9,38 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import kr.or.ddit.common.model.Page;
+import kr.or.ddit.config.test.RootTestConfig;
 import kr.or.ddit.user.model.User;
 import kr.or.ddit.user.service.IUserService;
 import kr.or.ddit.user.service.UserService;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {
-		"classpath:kr/or/ddit/config/spring/context-root.xml",
-		"classpath:kr/or/ddit/config/spring/context-datasource.xml",
-		"classpath:kr/or/ddit/config/spring/context-transaction.xml"})
-public class UserServiceTest {
-	private static final Logger logger = LoggerFactory.getLogger(UserServiceTest.class);
-	@Resource(name="userService")
-	private IUserService userService;
 
+public class UserServiceTest extends RootTestConfig{
+	
+	private static final Logger logger = LoggerFactory.getLogger(UserServiceTest.class);
+
+	
 	private String userId = "brownTest";
 	
 	
-	@Before
-	public void setup() {
-		logger.debug("before");
-		userService.deleteUser(userId);
-	}
+	@Resource(name="userService")
+	private IUserService userService;
+	
+
 	
 	
 	
@@ -158,6 +158,16 @@ public class UserServiceTest {
 		double paginationSize = Math.ceil((double)toatalCnt / pagesize);
 		/***Then***/
 		assertEquals(11, (int)paginationSize);
+	}
+	
+	@Test
+	public void updateUserTest() throws ParseException{
+		/***Given***/
+		
+
+		/***When***/
+
+		/***Then***/
 	}
 	
 
