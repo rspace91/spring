@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.ddit.common.model.Page;
 import kr.or.ddit.user.model.User;
@@ -79,7 +80,14 @@ public class UserController {
 	 * Method 설명 : 사용자 페이징리스트 조회
 	 */
 	@RequestMapping(path="userPagingList", method = RequestMethod.GET)
-	public String userPagingList(Model model, Page page) {
+	public String userPagingList(@RequestParam(name="page",defaultValue = "1") int  p,
+											  @RequestParam(defaultValue = "10") int pagesize, Model model) {
+//		public String userPagingList(Page page, Model model){
+		Page page = new Page(p, pagesize);
+		model.addAttribute("pageVo", page);
+		
+//		Map<String, Object> resultMap = userService.getUserPagingList(page);
+//		model.addAttribute(resultMap);
 		
 		logger.debug("page:{}",page);
 		model.addAttribute("pageVo", page);
