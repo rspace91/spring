@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.ddit.common.model.Page;
 import kr.or.ddit.lprod.model.Lprod;
@@ -47,9 +48,13 @@ public class lProdController {
 	 * Method 설명 :
 	 */
 	@RequestMapping(path = "lprodPagingList'", method = RequestMethod.GET)
-	public String lprodPagingList(Model model, Page page) {
+//	public String lprodPagingList(Model model, Page page) {
+	public String lprodPagingList(@RequestParam(name="page",defaultValue = "1") int  p,
+			  @RequestParam(defaultValue = "5") int pagesize, Model model) {
+		Page page = new Page(p, pagesize);
 		model.addAttribute("pageVo", page);
-	
+		
+		logger.debug("page:{}",page);
 		List<Lprod> resultList = lprodService.getLprodPagingList(page);
 		model.addAllAttributes(resultList);
 		return "lprod/lprodPagingList";

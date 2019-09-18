@@ -90,7 +90,7 @@ public class UserController {
 //		model.addAttribute(resultMap);
 		
 		logger.debug("page:{}",page);
-		model.addAttribute("pageVo", page);
+//		model.addAttribute("pageVo", page);
 		
 		
 		Map<String, Object> resultMap = userService.getUserPagingList(page);
