@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.http.HttpSessionBindingEvent;
+import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ private static final Logger logger = LoggerFactory.getLogger(User.class);
 	
 	private String userNm;  //사용자 이름
 	private String userId;
+	@NotNull
 	private String pass;	//사용자비밀번호
 	private String alias;	//별명
 	private Date reg_dt;	//등록일	
