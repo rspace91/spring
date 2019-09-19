@@ -20,6 +20,7 @@ private static final Logger logger = LoggerFactory.getLogger(User.class);
 	@NotNull
 	private String pass;	//사용자비밀번호
 	private String alias;	//별명
+	@DateTimeFormat(pattern ="yyyy-MM-dd")
 	private Date reg_dt;	//등록일	
 	private String addr1;   //주소1
 	private String addr2;   //주소2

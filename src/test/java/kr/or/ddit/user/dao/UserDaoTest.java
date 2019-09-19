@@ -157,11 +157,23 @@ public class UserDaoTest extends RootTestConfig {
 	@Test
 	public void updateUserTest() throws ParseException{
 		/***Given***/
+		User user = new User();
 		
+		user.setUserId("conytest2");
+		user.setUserNm("브라운테스트123");
+		user.setPass("brownTest1234555");
+		user.setReg_dt(new SimpleDateFormat("yyyy-MM-dd").parse("2019-08-08"));
+		user.setAlias("곰테스트");
+		user.setAddr1("대전광역시 중구 중앙로 76");
+		user.setAddr2("영민빌딩 2층 DDIT");
+		user.setZipcode("34940");
+		user.setFilename("brown.png");
+		user.setRealfilename("e:\\upload\\2019\\08\\55bc56be-9b25-47b0-bd1b-ca226a3a12e2.png");
 
 		/***When***/
-
+		int updateCnt = userDao.updateUser(user);
 		/***Then***/
+		assertEquals(0, updateCnt);
 	}
 	
 	

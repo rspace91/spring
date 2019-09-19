@@ -29,8 +29,6 @@ public class RootTestConfig {
 	@Resource(name="datasource")
 	private BasicDataSource  datasource;
 
-	
-	
 	@Before
 	public void setup() {
 		logger.debug("before");
