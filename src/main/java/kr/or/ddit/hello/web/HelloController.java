@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class HelloController {
@@ -25,4 +26,18 @@ public class HelloController {
 		
 		return "hello/hello";		//WEB-INF/views/hello/hello.jsp
 	}
+	
+	@RequestMapping("hello/helloMav.do")
+	public ModelAndView helloMav(String userId) {
+		ModelAndView mav = new ModelAndView("hello/hello");
+//		mav.setViewName("hello/hello");  //ModelAndView 객체를 통한 viewName 설정
+		
+		mav.addObject("nowDt", new Date());
+		mav.addObject("msg", "hello, World");
+		mav.addObject("userId", userId + "helloControll");
+		
+		
+		return mav;
+	}
+	
 }
