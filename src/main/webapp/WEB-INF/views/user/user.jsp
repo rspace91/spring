@@ -1,9 +1,9 @@
-<%@page import="kr.or.ddit.user.model.User"%>
 <%@page import="java.util.List"%>
+<%@page import="kr.or.ddit.user.model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>	
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,67 +16,69 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title>Jsp-basic</title>
+<title>Jsp-basicLib</title>
 <%@ include file="/WEB-INF/views/commonJsp/basicLib.jsp"%>
 
-
-<!--header  -->
-<%@include file="/WEB-INF/views/commonJsp/header.jsp"%>
+</head>
 <body>
-
+	
+	<!-- header -->
+	<%@ include file="/WEB-INF/views/commonJsp/header.jsp" %>
+	
 	<div class="container-fluid">
 		<div class="row">
-
 			<div class="col-sm-3 col-md-2 sidebar">
-				<!--left  -->
-				<%@ include file="/WEB-INF/views/commonJsp/left.jsp"%>
+				<!-- left -->
+				<%@ include file="/WEB-INF/views/commonJsp/left.jsp" %>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-
-				<form class="form-horizontal" role="form" action="${cp }/user/userModify" method="get">
 				
-    			  <div class="form-group">
-	                  <label for="userNm" class="col-sm-2 control-label">사용자 사진</label>
-	                  <div class="col-sm-10">
-	                     <%-- <img src="${cp }${user.realfilename2}"/> --%>
-	                     <img src ="${cp }/user/userPicture?userId=${user.userId }"/>
-	                  </div>
-             	  </div>
-
+				<form class="form-horizontal" role="form" action="${cp }/user/userModify">
+					<input type="hidden" name="userId" value="${user.userId }"/>
+					
+					<div class="form-group">
+						<label for="userNm" class="col-sm-2 control-label">사용자 사진</label>
+						<div class="col-sm-10">
+						<%--<img src="${cp }${user.realfilename2 }"/>--%>
+							<img src="${cp }/user/userPicture?userId=${user.userId}"/>
+						</div>
+					</div>
+					
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">사용자 아이디</label>
 						<div class="col-sm-10">
-							<label class="control-label">${user.userId}</label>	
+							<label class="control-label">${user.userId }</label>
 						</div>
 					</div>
-
 
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">사용자 이름</label>
 						<div class="col-sm-10">
-							<label class="control-label">${user.userNm}</label>	
+							<label class="control-label">${user.userNm }</label>
 						</div>
 					</div>
+					
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">별명</label>
 						<div class="col-sm-10">
-						<label class="control-label">${user.alias}</label>	
+							<label class="control-label">${user.alias }</label>
 						</div>
 					</div>
+					
 					<div class="form-group">
 						<label for="pass" class="col-sm-2 control-label">등록일</label>
 						<div class="col-sm-10">
+							<%--<label class="control-label">${user.reg_dt_fmt }</label>--%>
 							<label class="control-label">
-								fmt <fmt:formatDate value="${user.reg_dt }" pattern="yyyy-MM-dd"/>
-							</label>	
-<%-- 						<label class="control-label">${user.reg_dt_fmt}</label>	 --%>
+								<fmt:formatDate value="${user.reg_dt }" pattern="yyyy-MM-dd"/>
+							</label>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="pass" class="col-sm-2 control-label">Password</label>
 						<div class="col-sm-10">
-							<label class="control-label">${user.pass}</label>	
+							<label class="control-label">${user.pass }</label>
 						</div>
 					</div>
 

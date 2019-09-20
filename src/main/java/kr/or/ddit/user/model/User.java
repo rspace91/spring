@@ -10,6 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+
 public class User {
 private static final Logger logger = LoggerFactory.getLogger(User.class);	
 	
@@ -20,8 +23,11 @@ private static final Logger logger = LoggerFactory.getLogger(User.class);
 	@NotNull
 	private String pass;	//사용자비밀번호
 	private String alias;	//별명
+	
+	@JsonFormat(shape=Shape.STRING, pattern = "yyyy-MM-dd")
 	@DateTimeFormat(pattern ="yyyy-MM-dd")
 	private Date reg_dt;	//등록일	
+	
 	private String addr1;   //주소1
 	private String addr2;   //주소2
 	private String zipcode;   //우편번호
@@ -99,11 +105,11 @@ private static final Logger logger = LoggerFactory.getLogger(User.class);
 		return reg_dt;
 	}
 	
-	public String getReg_dt_fmt() {
-		logger.debug("getReg_dt_fmt method call");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		return sdf.format(reg_dt);
-	}
+//	public String getReg_dt_fmt() {
+//		logger.debug("getReg_dt_fmt method call");
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//		return sdf.format(reg_dt);
+//	}
 
 	public void setReg_dt(Date reg_dt) {
 		this.reg_dt = reg_dt;

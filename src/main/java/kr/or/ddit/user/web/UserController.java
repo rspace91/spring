@@ -173,25 +173,137 @@ public class UserController {
 		
 	}
 	
+	
+	
 	/**
 	 * Method : userModifyView
 	 * 작성자 : PC-12
 	 * 변경이력 :
 	 * @return
-	 * Method 설명 : 사용자 수정 화면 요청
+	 * Method 설명 : 사용자 수정 화면 
 	 */
 	@RequestMapping(path = "userModify", method = RequestMethod.GET)
-	public String userModifyView(Model model, String userId) {
-		logger.debug("userId = {}",userId);
-		User user = userService.getUser(userId);
-		model.addAttribute(user);
+	public String userModifyView(String userId, Model model) {
+		model.addAttribute("user", userService.getUser(userId));
 		return "user/userModify";
+	}
+
+	@RequestMapping(path = "userModify", method = RequestMethod.POST)
+	public String userModify(User user, BindingResult result, Model model,
+			@RequestPart("picture") MultipartFile picture) {
+
+		new UserValidator().validate(user, result);
+
+		if (result.hasErrors())
+			return userModifyView(user.getUserId(), model);
+		else {
+			FileInfo fileInfo = FileUtil.getFileInfo(picture.getOriginalFilename());
+			// 첨부된 파일이 있을 경우만 업로드처리
+			if (picture.getSize() > 0) {
+				try {
+
+					// 기존 파일은 삭제한다
+					User orgUser = userService.getUser(user.getUserId());
+					
+					if(orgUser.getRealfilename() != null) {
+						File file = new File(orgUser.getRealfilename());
+						file.delete();
+					}
+
+					picture.transferTo(fileInfo.getFile());
+					user.setFilename(fileInfo.getOrginalFileName());// originalFilename
+					user.setRealfilename(fileInfo.getFile().getPath());
+
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+			int updateCnt = userService.updateUser(user);
+
+			if (updateCnt == 1)
+				return "redirect:/user/user?userId=" + user.getUserId();
+			else
+				return userModifyView(user.getUserId(), model);
+		}
 	}
 	
 	
-//	@RequestMapping()
+	@RequestMapping(path = "userPagingListAjaxView")
+	public String userPagingListAjaxView() {
+		
+		return "user/userPagingListAjaxView";
+	}
 	
 	
+	/**
+	 * Method : userPagingListAjax
+	 * 작성자 : PC-12
+	 * 변경이력 :
+	 * @param p
+	 * @param pagesize
+	 * @param model
+	 * @return
+	 * Method 설명 : 사용자 페이징 리스트의 결과를  html로 생성한다(jsp)
+	 */
+	@RequestMapping("userPagingListHtmlAjax")
+	public String userPagingListHtmlAjax(@RequestParam(defaultValue ="1")int page, 
+																@RequestParam(defaultValue ="10")int pagesize,
+																Model model){
+		Page pageVo = new Page(page, pagesize);
+		Map<String , Object> resultMap = userService.getUserPagingList(pageVo);
+		model.addAllAttributes(resultMap);
+		model.addAttribute("pageVo", pageVo);
+		
+		return "user/userPagingListHtmlAjax";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@RequestMapping(path="userPagingListAjax", method = RequestMethod.GET)
+	public String userPagingListAjax(@RequestParam(name="page",defaultValue = "1") int  p,
+											  @RequestParam(defaultValue = "10") int pagesize, Model model) {
+	
+		Page page = new Page(p, pagesize);
+		model.addAttribute("pageVo", page);
+		
+		
+		logger.debug("page:{}",page);
+		
+		
+		Map<String, Object> resultMap = userService.getUserPagingList(page);
+		model.addAllAttributes(resultMap);
+		
+		return "jsonView";
+	}
 	
 	
 	
