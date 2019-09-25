@@ -152,9 +152,6 @@ public class UserControllerTest extends WebTestConfig{
 		//.andExpect(view().name("redirect:user/user"))	;
 	}
 	
-	
-	
-	
 	/**
 	 * Method : userModifyViewTest
 	 * 작성자 : PC-12
@@ -165,23 +162,13 @@ public class UserControllerTest extends WebTestConfig{
 	@Test
 	public void userModifyViewTest() throws Exception {
 		/***Given***/
-		
 
 		/***When***/
-		MvcResult mvcResult = mockMvc.perform(get("/user/userModify")).andReturn();
+		MvcResult mvcResult = mockMvc.perform(get("/user/userModify").param("userId","brown")).andReturn();
 		ModelAndView mav = mvcResult.getModelAndView();
 		/***Then***/
 		assertEquals("user/userModify", mav.getViewName());
 	}
-	
-	
-	
-	
-	
-	//사용자 수정화면 요청테스트
-	//사용자 수정요청테스트
-	
-	
 	
 	@Test
 	public void pageTest() {
