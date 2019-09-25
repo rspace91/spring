@@ -59,11 +59,15 @@
 	});
 
 	
+
+	
 	
 	//ajax 응답을 html로 받는다(html javascript로 생성하는 작업을 줄인다)
 	function getUserHtmlList(page, pagesize) {
 		$.ajax({
 			url : "${cp}/user/userPagingListHtmlAjax",
+			
+			//파라미터 -> json
 			data : "page=" + page + "&pagesize=" + pagesize,
 			success : function(data) {
 					console.log(data);
@@ -73,6 +77,28 @@
 					$(".pagination").html(html[1]);
 // 				createUserListTbody(data.userList); //userList html 생성
 // 				createPagination(data.pageVo, data.paginationSize); //페이지네이션 html생성
+
+			}
+		});
+	}
+	
+	function getUserListRequestBody(page, pagesize){
+		
+		var param = {};
+		param.page = page;
+		param.pagesize = pagesize;
+		console.log("param : " + param);
+		
+		$.ajax({
+			url : "${cp}/user/userPagingListAjaxRequestBody",
+			contentType : "application/json",
+			dataType : "application/json",
+			method : "post",
+			data : JSON.stringify(param),
+			success : function(data) {
+
+				createUserListTbody(data.userList); //userList html 생성
+				createPagination(data.pageVo, data.paginationSize); //페이지네이션 html생성
 
 			}
 		});
